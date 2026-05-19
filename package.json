@@ -1,0 +1,65 @@
+{
+  "name": "anicca-ui",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A production-ready React utility library with dashboard components, form validation, date manipulation, and general utilities",
+  "main": "dist/anicca-ui.umd.js",
+  "module": "dist/anicca-ui.es.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/anicca-ui.es.js",
+      "require": "./dist/anicca-ui.umd.js"
+    },
+    "./styles.css": {
+      "default": "./dist/anicca-ui.css"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "prebuild": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "tsc --noEmit && vite build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/react-vite": "^8.6.18",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "storybook": "^8.6.18",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "vite-plugin-dts": "^3.0.0"
+  },
+  "keywords": [
+    "react",
+    "utility",
+    "dashboard",
+    "validation",
+    "date",
+    "hooks"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

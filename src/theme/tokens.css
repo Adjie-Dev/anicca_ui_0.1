@@ -1,0 +1,39 @@
+:root {
+  --anicca-primary: #3b82f6;
+  --anicca-primary-fg: #ffffff;
+  --anicca-primary-soft: rgba(59, 130, 246, 0.08);
+
+  --anicca-success: #059669;
+  --anicca-success-bg: rgba(16, 185, 129, 0.1);
+  --anicca-danger: #dc2626;
+  --anicca-danger-bg: rgba(220, 38, 38, 0.1);
+  --anicca-warning: #d97706;
+  --anicca-warning-bg: rgba(217, 119, 6, 0.1);
+  --anicca-info: #6366f1;
+  --anicca-info-bg: rgba(99, 102, 241, 0.1);
+
+  --anicca-surface: #ffffff;
+  --anicca-surface-muted: #f8fafc;
+  --anicca-surface-overlay: rgba(15, 23, 42, 0.6);
+
+  --anicca-surface-dark: #0f172a;
+  --anicca-surface-dark-2: #1e293b;
+  --anicca-surface-dark-fg: #e2e8f0;
+  --anicca-surface-dark-fg-muted: #94a3b8;
+
+  --anicca-border: #e2e8f0;
+  --anicca-border-strong: #cbd5e1;
+  --anicca-border-dark: rgba(51, 65, 85, 0.5);
+
+  --anicca-text: #0f172a;
+  --anicca-text-muted: #64748b;
+  --anicca-text-subtle: #94a3b8;
+
+  --anicca-radius: 1rem;
+  --anicca-radius-sm: 0.625rem;
+  --anicca-radius-lg: 1.25rem;
+
+  --anicca-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
+  --anicca-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(0, 0, 0, 0.1);
+  --anicca-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
