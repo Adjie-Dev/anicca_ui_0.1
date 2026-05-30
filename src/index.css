@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ──────────────────────────────────────────────────────────────
+   Design tokens — light in :root, dark in .dark.
+   Values are space-separated RGB channels so Tailwind's
+   `rgb(var(--x) / <alpha-value>)` opacity modifiers work.
+   ────────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --primary: 70 72 212;
+    --on-primary: 255 255 255;
+    --primary-container: 96 99 238;
+    --secondary: 86 94 116;
+    --secondary-container: 218 226 253;
+    --on-secondary-container: 92 100 122;
+    --tertiary: 5 150 105;
+    --tertiary-fixed: 255 220 197;
+    --error: 186 26 26;
+    --on-error: 255 255 255;
+    --error-container: 255 218 214;
+    --surface: 248 249 255;
+    --surface-bright: 248 249 255;
+    --surface-container-lowest: 255 255 255;
+    --surface-container-low: 239 244 255;
+    --surface-container: 229 238 255;
+    --surface-container-high: 220 233 255;
+    --surface-container-highest: 211 228 254;
+    --surface-variant: 211 228 254;
+    --on-surface: 11 28 48;
+    --on-surface-variant: 70 69 84;
+    --outline: 118 117 134;
+    --outline-variant: 199 196 215;
+    --background: 248 249 255;
+    --sidebar-bg: 248 249 255;
+    --violet: 124 58 237;
+    --amber: 217 119 6;
+  }
+
+  .dark {
+    --primary: 59 130 246;
+    --on-primary: 255 255 255;
+    --primary-container: 37 99 235;
+    --secondary: 148 163 184;
+    --secondary-container: 51 65 85;
+    --on-secondary-container: 203 213 225;
+    --tertiary: 16 185 129;
+    --tertiary-fixed: 120 53 15;
+    --error: 239 68 68;
+    --on-error: 255 255 255;
+    --error-container: 69 10 10;
+    --surface: 30 41 59;
+    --surface-bright: 30 41 59;
+    --surface-container-lowest: 30 41 59;
+    --surface-container-low: 30 41 59;
+    --surface-container: 30 41 59;
+    --surface-container-high: 51 65 85;
+    --surface-container-highest: 71 85 105;
+    --surface-variant: 51 65 85;
+    --on-surface: 248 250 252;
+    --on-surface-variant: 203 213 225;
+    --outline: 148 163 184;
+    --outline-variant: 51 65 85;
+    --background: 15 23 42;
+    --sidebar-bg: 11 18 33;
+    --violet: 167 139 250;
+    --amber: 245 158 11;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Geist', sans-serif;
+    min-height: 100vh;
+    color: rgb(var(--on-surface));
+    background-color: rgb(var(--background));
+    background-image:
+      radial-gradient(1100px circle at 100% -10%, rgb(var(--primary) / 0.05), transparent 50%);
+    background-attachment: fixed;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Bricolage Grotesque', 'Geist', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgb(var(--outline) / 0.4); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgb(var(--outline) / 0.6); }
+
+  @keyframes anc-rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes anicca-shimmer {
+    0%   { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+  }
+
+  @keyframes anicca-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes anicca-slide-up {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Aurora utilities + shimmer + page-load reveal stagger
+   ────────────────────────────────────────────────────────────── */
+@layer utilities {
+  .glass {
+    background-color: rgb(var(--surface-container-lowest) / 0.78);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+  }
+
+  .anicca-shimmer {
+    background: linear-gradient(
+      90deg,
+      rgb(var(--surface-container-low)) 0%,
+      rgb(var(--outline-variant) / 0.3) 20%,
+      rgb(var(--surface-container-low)) 40%,
+      rgb(var(--surface-container-low)) 100%
+    );
+    background-size: 300% 100%;
+    animation: anicca-shimmer 1.8s ease-in-out infinite;
+  }
+
+  .anicca-fade-in  { animation: anicca-fade-in 0.2s ease; }
+  .anicca-slide-up { animation: anicca-slide-up 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+  .anicca-rise     { animation: anc-rise 0.5s cubic-bezier(0.4, 0, 0.2, 1) both; }
+}
+
+main > div > * { animation: anc-rise 0.5s cubic-bezier(0.4, 0, 0.2, 1) both; }
+main > div > *:nth-child(1) { animation-delay: 0.04s; }
+main > div > *:nth-child(2) { animation-delay: 0.10s; }
+main > div > *:nth-child(3) { animation-delay: 0.16s; }
+main > div > *:nth-child(4) { animation-delay: 0.22s; }
+main > div > *:nth-child(5) { animation-delay: 0.28s; }
+main > div > *:nth-child(6) { animation-delay: 0.34s; }
+main > div > *:nth-child(7) { animation-delay: 0.40s; }
+main > div > *:nth-child(n+8) { animation-delay: 0.46s; }
+
+@media (prefers-reduced-motion: reduce) {
+  main > div > * { animation: none; }
+}

@@ -1,8 +1,5 @@
 import React, { useState, useMemo } from 'react'
 
-/**
- * Column definition for AniccaDataTable.
- */
 export interface AniccaColumn<T> {
   key: keyof T & string
   label: string
@@ -21,40 +18,26 @@ export interface AniccaDataTableLabels {
   next?: string
 }
 
-/**
- * Props for AniccaDataTable.
- */
 export interface AniccaDataTableProps<T extends object> {
   data: T[]
   columns: AniccaColumn<T>[]
   searchable?: boolean
+  searchPlaceholder?: string
   pageSize?: number
   className?: string
-  /** i18n label overrides */
   labels?: AniccaDataTableLabels
 }
 
 const DEFAULT_LABELS: Required<AniccaDataTableLabels> = {
-  searchPlaceholder: 'Search...',
-  results: 'results',
-  emptyMessage: 'No data found',
-  page: 'Page',
-  of: 'of',
-  previous: '← Prev',
-  next: 'Next →',
+  searchPlaceholder: 'Search...', results: 'results', emptyMessage: 'No data found',
+  page: 'Page', of: 'of', previous: '← Prev', next: 'Next →',
 }
 
 /**
- * AniccaDataTable — A full-featured data table with search filtering,
- * column sorting, pagination, and custom cell rendering.
+ * AniccaDataTable — Data table with search, column sorting, and pagination.
  */
 export function AniccaDataTable<T extends object>({
-  data,
-  columns,
-  searchable = true,
-  pageSize = 5,
-  className = '',
-  labels,
+  data, columns, searchable = true, searchPlaceholder, pageSize = 5, className = '', labels,
 }: AniccaDataTableProps<T>): React.ReactElement {
   const [search, setSearch] = useState('')
   const [sortKey, setSortKey] = useState<string | null>(null)
@@ -63,22 +46,19 @@ export function AniccaDataTable<T extends object>({
   const t = { ...DEFAULT_LABELS, ...labels }
 
   const filtered = useMemo(() => {
-    let result = data
+    let r = data
     if (search) {
       const q = search.toLowerCase()
-      result = result.filter(row =>
-        columns.some(col => String((row as Record<string, unknown>)[col.key] ?? '').toLowerCase().includes(q))
-      )
+      r = r.filter((row) => columns.some((c) => String((row as Record<string, unknown>)[c.key] ?? '').toLowerCase().includes(q)))
     }
     if (sortKey) {
-      result = [...result].sort((a, b) => {
+      r = [...r].sort((a, b) => {
         const av = String((a as Record<string, unknown>)[sortKey] ?? '')
         const bv = String((b as Record<string, unknown>)[sortKey] ?? '')
-        const cmp = av.localeCompare(bv, undefined, { numeric: true })
-        return sortAsc ? cmp : -cmp
+        return sortAsc ? av.localeCompare(bv, undefined, { numeric: true }) : bv.localeCompare(av, undefined, { numeric: true })
       })
     }
-    return result
+    return r
   }, [data, search, sortKey, sortAsc, columns])
 
   const totalPages = pageSize > 0 ? Math.ceil(filtered.length / pageSize) : 1
@@ -90,35 +70,37 @@ export function AniccaDataTable<T extends object>({
   }
 
   return (
-    <div className={`bg-a-surface rounded-a shadow-a-sm border border-a-border overflow-hidden ${className}`}>
+    <div className={`bg-surface-container-lowest rounded-[20px] shadow-[0_1px_2px_rgba(11,28,48,0.04),0_12px_32px_-14px_rgba(11,28,48,0.14)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.3),0_2px_8px_rgba(0,0,0,0.3)] border border-on-surface/[0.06] dark:border-[rgba(51,65,85,0.5)] overflow-hidden ${className}`}>
       {searchable && (
-        <div className="flex items-center justify-between py-5 px-6 border-b border-a-border">
-          <div className="flex items-center gap-2 bg-a-surface-muted border-[1.5px] border-a-border rounded-[10px] py-2 px-[0.85rem] transition-colors focus-within:border-a-primary focus-within:shadow-[0_0_0_3px_var(--anicca-primary-soft)]">
-            <span className="text-[0.85rem] opacity-50">🔍</span>
+        <div className="flex items-center justify-between py-5 px-6 border-b border-on-surface/[0.06] dark:border-[rgba(51,65,85,0.5)]">
+          <div className="flex items-center gap-2 bg-[#f8fafc] dark:bg-background border border-on-surface/[0.08] dark:border-[rgba(71,85,105,0.5)] rounded-[10px] py-2 px-[0.85rem] transition-[border-color,box-shadow] duration-200 focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgb(var(--primary)/0.12)] dark:focus-within:border-primary dark:focus-within:shadow-[0_0_0_3px_rgba(59,130,246,0.15)]">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 text-outline" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" strokeLinecap="round" />
+            </svg>
             <input
-              className="border-none bg-transparent outline-none text-[0.85rem] font-[inherit] text-a-text w-[200px] placeholder:text-a-text-subtle"
+              className="border-none bg-transparent outline-none text-[0.85rem] font-[inherit] text-on-surface dark:text-on-surface w-[200px] placeholder:text-[#94a3b8] dark:placeholder:text-[#64748b]"
+              placeholder={searchPlaceholder ?? t.searchPlaceholder}
               value={search}
-              onChange={e => { setSearch(e.target.value); setPage(0) }}
-              placeholder={t.searchPlaceholder}
+              onChange={(e) => { setSearch(e.target.value); setPage(0) }}
             />
           </div>
-          <span className="text-xs text-a-text-subtle font-medium">{filtered.length} {t.results}</span>
+          <span className="text-[0.75rem] font-medium text-[#94a3b8]">{filtered.length} {t.results}</span>
         </div>
       )}
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse border-spacing-0">
+        <table className="w-full border-separate border-spacing-0">
           <thead>
             <tr>
-              {columns.map(col => (
+              {columns.map((col) => (
                 <th
                   key={col.key}
-                  className={`text-left py-3 px-5 text-[0.7rem] font-semibold text-a-text-muted uppercase tracking-[0.05em] bg-a-surface-muted whitespace-nowrap ${col.sortable ? 'cursor-pointer select-none transition-colors duration-150 hover:text-a-text' : ''}`}
+                  className={`text-left py-[0.9rem] px-5 text-[0.68rem] font-semibold text-[#767586] dark:text-[#94a3b8] uppercase tracking-[0.08em] bg-transparent dark:bg-background border-b border-on-surface/[0.06] dark:border-[rgba(51,65,85,0.5)] whitespace-nowrap ${col.sortable ? 'cursor-pointer select-none transition-colors duration-150 hover:text-on-surface dark:hover:text-on-surface' : ''}`}
                   style={col.width ? { width: col.width } : undefined}
                   onClick={col.sortable ? () => handleSort(col.key) : undefined}
                 >
                   {col.label}
                   {col.sortable && sortKey === col.key && (
-                    <span className="text-[0.7rem]">{sortAsc ? ' ↑' : ' ↓'}</span>
+                    <span className="text-[0.7rem] ml-1">{sortAsc ? '↑' : '↓'}</span>
                   )}
                 </th>
               ))}
@@ -126,33 +108,38 @@ export function AniccaDataTable<T extends object>({
           </thead>
           <tbody>
             {paged.length === 0 ? (
-              <tr><td colSpan={columns.length} className="py-12 px-6 text-center text-a-text-subtle text-[0.9rem]">{t.emptyMessage}</td></tr>
-            ) : (
-              paged.map((row, i) => (
-                <tr key={i} className="transition-colors duration-150 hover:[&>td]:bg-a-surface-muted">
-                  {columns.map(col => (
-                    <td key={col.key} className="py-[0.85rem] px-5 text-[0.85rem] border-b border-a-border align-middle last:border-b-0 text-a-text">
-                      {col.render ? col.render((row as Record<string, unknown>)[col.key] as T[keyof T], row) : String((row as Record<string, unknown>)[col.key] ?? '')}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            )}
+              <tr>
+                <td colSpan={columns.length} className="py-12 px-6 text-center text-[#94a3b8] text-[0.85rem]">
+                  {t.emptyMessage}
+                </td>
+              </tr>
+            ) : paged.map((row, i) => (
+              <tr key={i} className="group">
+                {columns.map((col) => (
+                  <td
+                    key={col.key}
+                    className={`py-4 px-5 text-[0.85rem] text-on-surface dark:text-[#cbd5e1] align-middle border-b border-on-surface/[0.05] dark:border-[rgba(51,65,85,0.4)] last:border-b-0 transition-colors duration-150 group-hover:bg-primary/[0.07] dark:group-hover:bg-[rgba(71,85,105,0.35)] ${i % 2 !== 0 ? 'bg-surface-container-low/40 dark:bg-[rgba(51,65,85,0.25)]' : ''}`}
+                  >
+                    {col.render
+                      ? col.render((row as Record<string, unknown>)[col.key] as T[keyof T], row)
+                      : String((row as Record<string, unknown>)[col.key] ?? '')}
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
       {pageSize > 0 && totalPages > 1 && (
-        <div className="flex items-center justify-center gap-4 py-4 px-6 border-t border-a-border">
+        <div className="flex items-center justify-center gap-4 py-4 px-6 border-t border-on-surface/[0.06] dark:border-[rgba(51,65,85,0.5)]">
           <button
-            className="py-[0.4rem] px-[0.85rem] border-[1.5px] border-a-border rounded-lg bg-a-surface text-[0.78rem] font-medium text-a-text-muted cursor-pointer transition-all duration-150 font-[inherit] hover:enabled:border-a-primary hover:enabled:text-a-primary disabled:opacity-40 disabled:cursor-not-allowed"
-            disabled={page === 0}
-            onClick={() => setPage(page - 1)}
+            className="py-[0.45rem] px-[0.9rem] border border-on-surface/10 dark:border-[rgba(71,85,105,0.5)] rounded-[10px] bg-surface-container-lowest dark:bg-[#1e293b] text-[0.78rem] font-semibold text-[#565e74] dark:text-[#cbd5e1] cursor-pointer font-[inherit] transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:border-primary hover:enabled:text-primary hover:enabled:bg-primary/[0.04] dark:hover:enabled:border-[#3b82f6] dark:hover:enabled:text-[#3b82f6]"
+            disabled={page === 0} onClick={() => setPage(page - 1)}
           >{t.previous}</button>
-          <span className="text-[0.78rem] text-a-text-muted font-medium">{t.page} {page + 1} {t.of} {totalPages}</span>
+          <span className="text-[0.78rem] text-[#64748b] dark:text-[#94a3b8] font-medium">{t.page} {page + 1} {t.of} {totalPages}</span>
           <button
-            className="py-[0.4rem] px-[0.85rem] border-[1.5px] border-a-border rounded-lg bg-a-surface text-[0.78rem] font-medium text-a-text-muted cursor-pointer transition-all duration-150 font-[inherit] hover:enabled:border-a-primary hover:enabled:text-a-primary disabled:opacity-40 disabled:cursor-not-allowed"
-            disabled={page >= totalPages - 1}
-            onClick={() => setPage(page + 1)}
+            className="py-[0.45rem] px-[0.9rem] border border-on-surface/10 dark:border-[rgba(71,85,105,0.5)] rounded-[10px] bg-surface-container-lowest dark:bg-[#1e293b] text-[0.78rem] font-semibold text-[#565e74] dark:text-[#cbd5e1] cursor-pointer font-[inherit] transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:border-primary hover:enabled:text-primary hover:enabled:bg-primary/[0.04] dark:hover:enabled:border-[#3b82f6] dark:hover:enabled:text-[#3b82f6]"
+            disabled={page >= totalPages - 1} onClick={() => setPage(page + 1)}
           >{t.next}</button>
         </div>
       )}

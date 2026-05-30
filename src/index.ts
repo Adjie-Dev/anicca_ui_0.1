@@ -1,7 +1,13 @@
 import './dashboard/styles.css'
 
 export * from './theme'
+export * from './primitives'
+export * from './layout'
+export * from './data'
+export * from './feedback'
+export * from './overlay'
 export * from './dashboard'
 export * from './validation'
 export * from './date'
 export * from './utils'
+export * from './auth'

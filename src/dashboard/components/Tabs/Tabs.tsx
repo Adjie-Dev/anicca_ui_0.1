@@ -24,8 +24,7 @@ export interface AniccaTabsProps {
 }
 
 /**
- * AniccaTabs — A tab navigation component with animated indicator
- * and content switching. Supports controlled and uncontrolled modes.
+ * AniccaTabs — Tab navigation component with animated indicator and content switching.
  */
 export function AniccaTabs({
   tabs,
@@ -44,22 +43,38 @@ export function AniccaTabs({
   }
 
   return (
-    <div className={`bg-a-surface rounded-a shadow-a-sm border border-a-border overflow-hidden ${className}`}>
-      <div className="flex pt-2 px-6 border-b border-a-border" role="tablist">
-        {tabs.map(tab => (
-          <button
-            key={tab.key}
-            className={`py-[0.7rem] px-[1.1rem] text-[0.82rem] font-medium cursor-pointer border-none bg-transparent border-b-2 transition-all duration-200 flex items-center gap-[0.4rem] font-[inherit] -mb-px ${active === tab.key ? 'text-a-primary border-b-a-primary font-semibold' : 'text-a-text-muted border-b-transparent hover:text-a-text'}`}
-            onClick={() => handleSelect(tab.key)}
-            role="tab"
-            aria-selected={active === tab.key}
-          >
-            {tab.icon && <span className="text-[0.9rem]">{tab.icon}</span>}
-            {tab.label}
-          </button>
-        ))}
+    <div
+      className={`bg-surface-container-lowest rounded-[20px] shadow-[0_1px_2px_rgba(11,28,48,0.04),0_12px_32px_-14px_rgba(11,28,48,0.14)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.3),0_2px_8px_rgba(0,0,0,0.3)] border border-on-surface/[0.06] overflow-hidden ${className}`}
+    >
+      <div
+        className="flex pt-2 px-6 border-b border-[#f1f5f9] dark:border-outline-variant/50"
+        role="tablist"
+      >
+        {tabs.map(tab => {
+          const isActive = active === tab.key
+          return (
+            <button
+              key={tab.key}
+              className={`
+                py-[0.7rem] px-[1.1rem] text-[0.82rem] font-medium cursor-pointer
+                border-none bg-transparent border-b-2 transition-all duration-200
+                flex items-center gap-[0.4rem] font-[inherit] -mb-px
+                ${isActive
+                  ? 'text-primary border-b-primary font-semibold'
+                  : 'text-secondary border-b-transparent hover:text-on-surface dark:text-[#94a3b8] dark:hover:text-on-surface'
+                }
+              `}
+              onClick={() => handleSelect(tab.key)}
+              role="tab"
+              aria-selected={isActive}
+            >
+              {tab.icon && <span className="text-[0.9rem]">{tab.icon}</span>}
+              {tab.label}
+            </button>
+          )
+        })}
       </div>
-      <div className="p-6 text-a-text" role="tabpanel">
+      <div className="p-6 text-on-surface" role="tabpanel">
         {activeTab?.content}
       </div>
     </div>

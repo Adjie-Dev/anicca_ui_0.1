@@ -1,39 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+
+/* ── Design tokens — light in :root, dark in .dark ── */
 :root {
-  --anicca-primary: #3b82f6;
-  --anicca-primary-fg: #ffffff;
-  --anicca-primary-soft: rgba(59, 130, 246, 0.08);
-
-  --anicca-success: #059669;
-  --anicca-success-bg: rgba(16, 185, 129, 0.1);
-  --anicca-danger: #dc2626;
-  --anicca-danger-bg: rgba(220, 38, 38, 0.1);
-  --anicca-warning: #d97706;
-  --anicca-warning-bg: rgba(217, 119, 6, 0.1);
-  --anicca-info: #6366f1;
-  --anicca-info-bg: rgba(99, 102, 241, 0.1);
-
-  --anicca-surface: #ffffff;
-  --anicca-surface-muted: #f8fafc;
-  --anicca-surface-overlay: rgba(15, 23, 42, 0.6);
-
-  --anicca-surface-dark: #0f172a;
-  --anicca-surface-dark-2: #1e293b;
-  --anicca-surface-dark-fg: #e2e8f0;
-  --anicca-surface-dark-fg-muted: #94a3b8;
-
-  --anicca-border: #e2e8f0;
-  --anicca-border-strong: #cbd5e1;
-  --anicca-border-dark: rgba(51, 65, 85, 0.5);
-
-  --anicca-text: #0f172a;
-  --anicca-text-muted: #64748b;
-  --anicca-text-subtle: #94a3b8;
-
-  --anicca-radius: 1rem;
-  --anicca-radius-sm: 0.625rem;
-  --anicca-radius-lg: 1.25rem;
-
-  --anicca-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
-  --anicca-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(0, 0, 0, 0.1);
-  --anicca-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
+  --primary: 70 72 212;
+  --on-primary: 255 255 255;
+  --primary-container: 96 99 238;
+  --secondary: 86 94 116;
+  --secondary-container: 218 226 253;
+  --on-secondary-container: 92 100 122;
+  --tertiary: 5 150 105;
+  --tertiary-fixed: 255 220 197;
+  --error: 186 26 26;
+  --on-error: 255 255 255;
+  --error-container: 255 218 214;
+  --surface: 248 249 255;
+  --surface-bright: 248 249 255;
+  --surface-container-lowest: 255 255 255;
+  --surface-container-low: 239 244 255;
+  --surface-container: 229 238 255;
+  --surface-container-high: 220 233 255;
+  --surface-container-highest: 211 228 254;
+  --surface-variant: 211 228 254;
+  --on-surface: 11 28 48;
+  --on-surface-variant: 70 69 84;
+  --outline: 118 117 134;
+  --outline-variant: 199 196 215;
+  --background: 248 249 255;
+  --sidebar-bg: 248 249 255;
+  --violet: 124 58 237;
+  --amber: 217 119 6;
+  /* semantic status tokens */
+  --success: 22 163 74;
+  --success-container: 220 252 231;
+  --warning: var(--amber);
+  --warning-container: 254 243 199;
+  --info: var(--violet);
+  --info-container: 237 233 254;
 }
+
+.dark {
+  --primary: 59 130 246;
+  --on-primary: 255 255 255;
+  --primary-container: 37 99 235;
+  --secondary: 148 163 184;
+  --secondary-container: 51 65 85;
+  --on-secondary-container: 203 213 225;
+  --tertiary: 16 185 129;
+  --tertiary-fixed: 120 53 15;
+  --error: 239 68 68;
+  --on-error: 255 255 255;
+  --error-container: 69 10 10;
+  --surface: 30 41 59;
+  --surface-bright: 30 41 59;
+  --surface-container-lowest: 30 41 59;
+  --surface-container-low: 30 41 59;
+  --surface-container: 30 41 59;
+  --surface-container-high: 51 65 85;
+  --surface-container-highest: 71 85 105;
+  --surface-variant: 51 65 85;
+  --on-surface: 248 250 252;
+  --on-surface-variant: 203 213 225;
+  --outline: 148 163 184;
+  --outline-variant: 51 65 85;
+  --background: 15 23 42;
+  --sidebar-bg: 11 18 33;
+  --violet: 167 139 250;
+  --amber: 245 158 11;
+  /* semantic status tokens */
+  --success: 74 222 128;
+  --success-container: 20 83 45;
+  --warning: var(--amber);
+  --warning-container: 120 53 15;
+  --info: var(--violet);
+  --info-container: 46 16 101;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Geist', sans-serif;
+  min-height: 100vh;
+  color: rgb(var(--on-surface));
+  background-color: rgb(var(--background));
+  background-image: radial-gradient(1100px circle at 100% -10%, rgb(var(--primary) / 0.05), transparent 50%);
+  background-attachment: fixed;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Bricolage Grotesque', 'Geist', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgb(var(--outline) / 0.4); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--outline) / 0.6); }

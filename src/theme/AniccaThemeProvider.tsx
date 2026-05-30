@@ -32,7 +32,8 @@ function themeToCSSVars(theme?: AniccaTheme): React.CSSProperties {
  *
  * @example
  * ```tsx
- * <AniccaThemeProvider theme={{ primary: '#ff00ff' }}>
+ * // Purple primary theme (RGB channels format)
+ * <AniccaThemeProvider theme={{ primary: '124 58 237' }}>
  *   <AniccaStatCard title="Sales" value={42} />
  * </AniccaThemeProvider>
  * ```

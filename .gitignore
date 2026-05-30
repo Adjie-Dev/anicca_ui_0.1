@@ -12,6 +12,8 @@ storybook-static/
 CLAUDE.md
 .claude/
 
+.remember/
+
 # editor / OS
 .vscode/
 .idea/

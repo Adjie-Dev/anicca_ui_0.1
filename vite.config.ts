@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     dts({
       insertTypesEntry: true,
-      exclude: ['src/vite-env.d.ts', '**/*.test.*', '**/*.stories.*']
+      exclude: ['src/vite-env.d.ts', '**/*.test.*', '**/*.stories.*', 'src/playground.tsx']
     })
   ],
   build: {

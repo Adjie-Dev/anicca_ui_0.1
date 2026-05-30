@@ -3,13 +3,19 @@
 @tailwind utilities;
 
 @layer utilities {
+  .glass {
+    background-color: rgb(var(--surface-container-lowest) / 0.78);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+  }
+
   .anicca-shimmer {
     background: linear-gradient(
       90deg,
-      var(--anicca-surface-muted) 0%,
-      var(--anicca-border) 20%,
-      var(--anicca-surface-muted) 40%,
-      var(--anicca-surface-muted) 100%
+      rgb(var(--surface-container-low)) 0%,
+      rgb(var(--outline-variant) / 0.3) 20%,
+      rgb(var(--surface-container-low)) 40%,
+      rgb(var(--surface-container-low)) 100%
     );
     background-size: 300% 100%;
     animation: anicca-shimmer 1.8s ease-in-out infinite;
@@ -20,31 +26,47 @@
       -45deg,
       transparent,
       transparent 8px,
-      var(--anicca-primary-soft) 8px,
-      var(--anicca-primary-soft) 16px
+      rgba(241, 245, 249, 0.5) 8px,
+      rgba(241, 245, 249, 0.5) 16px
     );
   }
 
-  .anicca-fade-in {
-    animation: anicca-fade-in 0.2s ease;
+  .dark .anicca-empty-bg {
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 8px,
+      rgba(51, 65, 85, 0.4) 8px,
+      rgba(51, 65, 85, 0.4) 16px
+    );
   }
 
-  .anicca-slide-up {
-    animation: anicca-slide-up 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+  .anicca-fade-in  { animation: anicca-fade-in 0.2s ease; }
+  .anicca-slide-up { animation: anicca-slide-up 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+  .anicca-rise     { animation: anc-rise 0.5s cubic-bezier(0.4, 0, 0.2, 1) both; }
+}
+
+@keyframes anc-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
 }
 
 @keyframes anicca-shimmer {
-  0% { background-position: 100% 0; }
+  0%   { background-position: 100% 0; }
   100% { background-position: -100% 0; }
 }
 
 @keyframes anicca-fade-in {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 @keyframes anicca-slide-up {
   from { opacity: 0; transform: translateY(16px) scale(0.97); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+@keyframes anicca-slide-from-left   { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+@keyframes anicca-slide-from-right  { from { transform: translateX(100%); }  to { transform: translateX(0); } }
+@keyframes anicca-slide-from-top    { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+@keyframes anicca-slide-from-bottom { from { transform: translateY(100%); }  to { transform: translateY(0); } }
