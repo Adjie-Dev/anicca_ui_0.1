@@ -368,4 +368,4 @@ function Component() {
 
 ## License
 
-MIT — aniccaCode
+MIT  Anicca Code Studio
