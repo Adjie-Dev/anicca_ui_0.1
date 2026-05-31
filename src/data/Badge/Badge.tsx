@@ -14,7 +14,7 @@ export interface AniccaBadgeProps extends React.HTMLAttributes<HTMLSpanElement> 
 
 const VARIANT_SOFT: Record<AniccaBadgeVariant, string> = {
   neutral: 'bg-surface-muted text-text-muted',
-  primary: 'bg-primary-soft text-primary',
+  primary: 'bg-secondary-container text-primary',
   success: 'bg-success-bg text-success',
   warning: 'bg-warning-bg text-warning',
   danger: 'bg-danger-bg text-danger',

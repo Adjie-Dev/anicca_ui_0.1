@@ -1,3 +1,4 @@
+import './theme/tokens.css'
 import './dashboard/styles.css'
 
 export * from './theme'
